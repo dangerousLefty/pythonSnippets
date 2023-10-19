@@ -39,11 +39,37 @@ def climbingStairsKstepsOptimized(k: int, n:int) -> int:
 
     return stepArr[n % k]
 
+def climbingStairsRedSteps(k: int, n: int, stairs: [bool]) -> int:
+    if n < 2:
+        return 1
+    stepArr = [0 for i in range(k)]
+    stepArr[0] = 1
+    #stepArr[1] = 1
 
+    for i in range(1,n+1):
+        comb = 0
+        for j in range(1,k+1):
+            if i - j < 0:
+                continue
+
+            if stairs[i-j] == True:
+                #stepArr[i%k] = 0
+                comb += 0
+            
+            else:
+                comb += stepArr[(i-j)%k]
+        
+        stepArr[i%k] = comb
+            
+
+    return stepArr[n % k]
 
 
 #a = climbingStairs(3,5)
-a = climbingStairsKstepsOptimized(2,5)
+#a = climbingStairsKstepsOptimized(2,5)
+steps = [False, True, False, True, True, False, False]
+a = climbingStairsRedSteps(3,7,steps)
+
     
 
     
