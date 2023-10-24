@@ -1,49 +1,49 @@
-"""This file is for blah blah blah """
+def search(nums: list[int], target: int) -> int:
+        if len(nums) == 0:
+            if nums[0] == target:
+                return 0
+            else:
+                return -1
 
-#climbing stairs with k steps
-def climbingStairs(k: int, n:int) -> int:
-    if n < 2:
-        return 1
-    stepArr = [1 for i in range(n+1)]
-    stepArr[0] = 1
-    stepArr[1] = 1
+        left = 0
+        right = len(nums)-1
+        mid = left + (right - left) // 2
 
-    for i in range(2,n+1):
-        combinations = 0
-        for j in range(1,k+1):
-            if j > i:
-                break
-
-            combinations += stepArr[i-j]
+        if nums[mid] == target:
+            return mid
         
-        stepArr[i] = combinations
+        #find pivot or smallest element 
+        while left < right:
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            else:
+                right = mid
 
-    return stepArr[n]
+            mid = left + (right - left) // 2
 
-def climbingStairsKstepsOptimized(k: int, n:int) -> int:
-    if n < 2:
-        return 1
-    stepArr = [0 for i in range(k)]
-    stepArr[0] = 1
-    stepArr[1] = 1
+        pivot = left
+        left = 0
+        right = len(nums)-1
+        print("apples")
 
-    for i in range(2,n+1):
-        comb = 0
-        for j in range(1,k+1):
-            if i - j < 0:
-                continue
-            comb += stepArr[(i-j)%k]
+        if target >= nums[pivot] and target <= right:
+            left = pivot
         
-        stepArr[i%k] = comb
+        else:
+            right = pivot - 1
+
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid
             
+            if nums[mid] > target:
+                right = mid - 1
+            
+            else:
+                left = mid + 1
 
-    return stepArr[n % k]
+        return -1
 
 
-
-
-#a = climbingStairs(3,5)
-a = climbingStairsKstepsOptimized(2,5)
-    
-
-    
+a = search([1,3],3)
