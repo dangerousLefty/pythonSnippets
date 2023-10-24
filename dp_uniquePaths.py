@@ -169,7 +169,7 @@ def uniquePathsCosts(input: [[int]]) -> int:
 
     return dpMatrix[i][j]
 
-def uniquePathsCostsWithRoute(input: [[int]]):
+def uniquePathsCostsWithRoute(input: [[int]]) -> ():
     m = len(input) #rows
     n = len(input[0]) #columns
 
@@ -222,7 +222,7 @@ def uniquePathsCostsWithRoute(input: [[int]]):
 
     routeArray.reverse()
 
-    print(routeArray)
+    return (dpMatrix[m-1][n-1][0], routeArray)
 
 
 
@@ -231,4 +231,6 @@ matrix = [[0,2,2,1],
           [4,4,2,0]]
 
 a = uniquePathsCostsWithRoute(matrix)
+
+print(" total profit is {0} \n and route to take is {1}".format(a[0], a[1]))
     
