@@ -1,49 +1,25 @@
-def search(nums: list[int], target: int) -> int:
-        if len(nums) == 0:
-            if nums[0] == target:
-                return 0
-            else:
-                return -1
+import collections
 
-        left = 0
-        right = len(nums)-1
-        mid = left + (right - left) // 2
+def maxSlidingWindow(nums: list[int], k: int) -> list[int]:
+        if len(nums) == 1 and k == 1:
+            return nums
 
-        if nums[mid] == target:
-            return mid
-        
-        #find pivot or smallest element 
-        while left < right:
-            if nums[mid] > nums[right]:
-                left = mid + 1
-            else:
-                right = mid
-
-            mid = left + (right - left) // 2
-
-        pivot = left
-        left = 0
-        right = len(nums)-1
-        print("apples")
-
-        if target >= nums[pivot] and target <= right:
-            left = pivot
-        
-        else:
-            right = pivot - 1
-
-        while left <= right:
-            mid = left + (right - left) // 2
-            if nums[mid] == target:
-                return mid
+        myDeque = collections.deque()
+        finalAns = []
+    
+        for ptr in range(0, len(nums)):
+            if len(myDeque) > 0 and ptr - myDeque[0] >= k:
+                myDeque.popleft()
             
-            if nums[mid] > target:
-                right = mid - 1
+            #deque in ascending order
+            while len(myDeque) > 0 and nums[ptr] > nums[myDeque[-1]]:
+                myDeque.pop()
             
-            else:
-                left = mid + 1
+            myDeque.append(ptr)
 
-        return -1
+            if ptr >= k - 1:
+                finalAns.append(nums[myDeque[0]])
 
+        return finalAns
 
-a = search([1,3],3)
+a = maxSlidingWindow([1,3,1,2,0,5],3)
