@@ -1,25 +1,12 @@
-import collections
+str = "3#1234#45679#890101010"
 
-def maxSlidingWindow(nums: list[int], k: int) -> list[int]:
-        if len(nums) == 1 and k == 1:
-            return nums
-
-        myDeque = collections.deque()
-        finalAns = []
+outputArr = list()
+i = 0
+while i < len(str):
+    if str[i].isdigit() and str[i+1] == '#':
+        length = int(str[i])
+        outputArr.append(str[i+2: i+2 + length])
+        i = i + 2 + length
     
-        for ptr in range(0, len(nums)):
-            if len(myDeque) > 0 and ptr - myDeque[0] >= k:
-                myDeque.popleft()
-            
-            #deque in ascending order
-            while len(myDeque) > 0 and nums[ptr] > nums[myDeque[-1]]:
-                myDeque.pop()
-            
-            myDeque.append(ptr)
-
-            if ptr >= k - 1:
-                finalAns.append(nums[myDeque[0]])
-
-        return finalAns
-
-a = maxSlidingWindow([1,3,1,2,0,5],3)
+    else:
+        i += 1
